@@ -22,7 +22,6 @@
 
 #include <madterm/terminal_sequence.hpp>
 
-
 namespace madterm::text {
 
 enum class colours : int {
@@ -34,7 +33,7 @@ enum class colours : int {
     magenta        = 5,
     cyan           = 6,
     white          = 7,
-    default        = 9,
+    default_colour = 9,
     bright_black   = 60,
     bright_red     = 61,
     bright_green   = 62,
