@@ -21,17 +21,30 @@
 #pragma once
 
 #include <iosfwd>
+#include <string>
+#include <type_traits>
+
 
 namespace madterm {
 
+class i_terminal_sequence {
+};
+
 template<typename Derived>
-class terminal_sequence {
+class terminal_sequence : public i_terminal_sequence {
 public:
+    explicit terminal_sequence(::std::string seq = "\x1b[")
+        : seq_{::std::move(seq)}
+    {
+    }
+
     template<typename CharT, typename Traits = std::char_traits<CharT>>
     ::std::basic_ostream<CharT, Traits> &
     operator()(::std::basic_ostream<CharT, Traits> &out) const
     {
-        out << "\x1b[";
+        thread_local const ::std::basic_string<CharT> stream_seq{
+            ::std::cbegin(seq_), ::std::cend(seq_)};
+        out << stream_seq;
         return derived().print_sequence(out);
     }
 
@@ -41,13 +54,17 @@ private:
     {
         return static_cast<Derived const &>(*this);
     }
+
+    ::std::string seq_;
 };
 
 template<
     typename Manipulator,
     typename CharT,
     typename Traits = std::char_traits<CharT>>
-::std::basic_ostream<CharT, Traits> &
+::std::enable_if_t<
+    ::std::is_base_of_v<i_terminal_sequence, Manipulator>,
+    ::std::basic_ostream<CharT, Traits> &>
 operator<<(::std::basic_ostream<CharT, Traits> &out, Manipulator manip)
 {
     return manip(out);

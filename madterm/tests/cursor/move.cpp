@@ -20,10 +20,11 @@
  */
 
 #include <madterm/cursor/move.hpp>
-
+#include <sstream>
 
 // clang-format: off
 #include <gtest/gtest.h>
+
 
 // clang-format: on
 

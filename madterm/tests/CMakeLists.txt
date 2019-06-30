@@ -10,6 +10,7 @@ add_executable(
     text/text_effects.cpp
     cursor/move.cpp
     cursor/mode.cpp
+    window/window.cpp
 )
 target_link_libraries(
     madterm_tests

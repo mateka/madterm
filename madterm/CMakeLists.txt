@@ -18,6 +18,7 @@ add_library(
     include/madterm/text/text_effects.hpp
     include/madterm/cursor/move.hpp
     include/madterm/cursor/mode.hpp
+    include/madterm/window/window.hpp
 )
 target_compile_features(
     madterm

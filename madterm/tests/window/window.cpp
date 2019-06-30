@@ -19,7 +19,7 @@
  * THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-#include <madterm/cursor/mode.hpp>
+#include <madterm/window/window.hpp>
 #include <sstream>
 
 // clang-format: off
@@ -28,30 +28,30 @@
 
 // clang-format: on
 
-TEST(modeTests, blink_on)
+TEST(windowTests, title_char)
 {
     std::ostringstream stream;
-    stream << madterm::cursor::blink(true);
-    EXPECT_EQ("\x1b[?12h", stream.str());
+    stream << madterm::window::title("Title");
+    EXPECT_EQ("\x1b]0;Title\x07", stream.str());
 }
 
-TEST(modeTests, blink_off)
+TEST(windowTests, title_wchar)
 {
-    std::ostringstream stream;
-    stream << madterm::cursor::blink(false);
-    EXPECT_EQ("\x1b[?12l", stream.str());
+    std::wostringstream stream;
+    stream << madterm::window::title("Title");
+    EXPECT_EQ(L"\x1b]0;Title\x07", stream.str());
 }
 
-TEST(modeTests, show)
+TEST(windowTests, wide)
 {
     std::ostringstream stream;
-    stream << madterm::cursor::show(true);
-    EXPECT_EQ("\x1b[?25h", stream.str());
+    stream << madterm::window::wide(true);
+    EXPECT_EQ("\x1b[?3h", stream.str());
 }
 
-TEST(modeTests, hide)
+TEST(windowTests, narrow)
 {
     std::ostringstream stream;
-    stream << madterm::cursor::show(false);
-    EXPECT_EQ("\x1b[?25l", stream.str());
+    stream << madterm::window::wide(false);
+    EXPECT_EQ("\x1b[?3l", stream.str());
 }

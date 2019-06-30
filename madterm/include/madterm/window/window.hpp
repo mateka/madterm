@@ -2,7 +2,7 @@
  * Copyright 2019 mateka
  *
  * Permission is hereby granted, free of charge, to any person obtaining
- * a copy of this software and associated documentation files (the "Software"),
+ * a copy of this software and associated documentation files(the "Software"),
  * to deal in the Software without restriction, including without limitation
  * the rights to use, copy, modify, merge, publish, distribute, sublicense,
  * and/or sell copies of the Software, and to permit persons to whom
@@ -18,40 +18,36 @@
  * TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH
  * THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
+#pragma once
 
-#include <madterm/cursor/mode.hpp>
-#include <sstream>
-
-// clang-format: off
-#include <gtest/gtest.h>
+#include <madterm/terminal_sequence.hpp>
 
 
-// clang-format: on
+namespace madterm::window {
 
-TEST(modeTests, blink_on)
+class title : public terminal_sequence<title> {
+public:
+    title(::std::string window_title)
+        : terminal_sequence<title>{"\x1b]0;"}, title_{window_title}
+    {
+    }
+
+    template<typename CharT, typename Traits = std::char_traits<CharT>>
+    ::std::basic_ostream<CharT, Traits> &
+    print_sequence(::std::basic_ostream<CharT, Traits> &out) const
+    {
+        thread_local const ::std::basic_string<CharT> stream_seq{
+            ::std::cbegin(title_), ::std::cend(title_)};
+        return out << stream_seq << "\x07";
+    }
+
+private:
+    ::std::string title_;
+};
+
+inline simple_terminal_sequence wide(bool value)
 {
-    std::ostringstream stream;
-    stream << madterm::cursor::blink(true);
-    EXPECT_EQ("\x1b[?12h", stream.str());
+    return simple_terminal_sequence{'?', 3, value ? 'h' : 'l'};
 }
 
-TEST(modeTests, blink_off)
-{
-    std::ostringstream stream;
-    stream << madterm::cursor::blink(false);
-    EXPECT_EQ("\x1b[?12l", stream.str());
-}
-
-TEST(modeTests, show)
-{
-    std::ostringstream stream;
-    stream << madterm::cursor::show(true);
-    EXPECT_EQ("\x1b[?25h", stream.str());
-}
-
-TEST(modeTests, hide)
-{
-    std::ostringstream stream;
-    stream << madterm::cursor::show(false);
-    EXPECT_EQ("\x1b[?25l", stream.str());
-}
+}  // namespace madterm::window
