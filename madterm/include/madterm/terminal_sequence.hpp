@@ -53,4 +53,65 @@ operator<<(::std::basic_ostream<CharT, Traits> &out, Manipulator manip)
     return manip(out);
 }
 
+class prefixed_terminal_sequence
+    : public terminal_sequence<prefixed_terminal_sequence> {
+public:
+    prefixed_terminal_sequence(short int value, char code)
+        : value_{value}, code_{code}
+    {
+    }
+
+    template<typename CharT, typename Traits = std::char_traits<CharT>>
+    ::std::basic_ostream<CharT, Traits> &
+    print_sequence(::std::basic_ostream<CharT, Traits> &out) const
+    {
+        return out << code_ << value_;
+    }
+
+private:
+    short int value_;
+    char      code_;
+};
+
+class suffixed_terminal_sequence
+    : public terminal_sequence<suffixed_terminal_sequence> {
+public:
+    suffixed_terminal_sequence(short int value, char code)
+        : value_{value}, code_{code}
+    {
+    }
+
+    template<typename CharT, typename Traits = std::char_traits<CharT>>
+    ::std::basic_ostream<CharT, Traits> &
+    print_sequence(::std::basic_ostream<CharT, Traits> &out) const
+    {
+        return out << value_ << code_;
+    }
+
+private:
+    short int value_;
+    char      code_;
+};
+
+class simple_terminal_sequence
+    : public terminal_sequence<simple_terminal_sequence> {
+public:
+    simple_terminal_sequence(char prefix, short int value, char suffix)
+        : value_{value}, prefix_{prefix}, suffix_{suffix}
+    {
+    }
+
+    template<typename CharT, typename Traits = std::char_traits<CharT>>
+    ::std::basic_ostream<CharT, Traits> &
+    print_sequence(::std::basic_ostream<CharT, Traits> &out) const
+    {
+        return out << prefix_ << value_ << suffix_;
+    }
+
+private:
+    short int value_;
+    char      prefix_;
+    char      suffix_;
+};
+
 }  // namespace madterm

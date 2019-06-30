@@ -22,6 +22,7 @@
 
 #include <madterm/terminal_sequence.hpp>
 
+
 namespace madterm::text {
 
 enum class colours : int {
@@ -45,19 +46,12 @@ enum class colours : int {
 };
 
 namespace detail {
-    class text_effect : public terminal_sequence<text_effect> {
+    class text_effect : public suffixed_terminal_sequence {
     public:
-        explicit text_effect(int effect) : effect_{effect} {}
-
-        template<typename CharT, typename Traits = std::char_traits<CharT>>
-        ::std::basic_ostream<CharT, Traits> &
-        print_sequence(::std::basic_ostream<CharT, Traits> &out) const
+        explicit text_effect(int effect)
+            : suffixed_terminal_sequence{effect, 'm'}
         {
-            return out << effect_ << 'm';
         }
-
-    private:
-        int effect_;
     };
 
     class predefined_colour : public terminal_sequence<predefined_colour> {

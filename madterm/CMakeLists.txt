@@ -16,6 +16,8 @@ add_library(
     include/madterm/enable_formatting.hpp
     src/enable_formatting.cpp
     include/madterm/text/text_effects.hpp
+    include/madterm/cursor/move.hpp
+    include/madterm/cursor/mode.hpp
 )
 target_compile_features(
     madterm
