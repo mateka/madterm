@@ -28,6 +28,8 @@
 
 // clang-format: on
 
+using namespace madterm::literals;
+
 TEST(colourTests, predefined_foreground_colour)
 {
     std::ostringstream stream;
@@ -38,7 +40,7 @@ TEST(colourTests, predefined_foreground_colour)
 TEST(colourTests, custom_foreground_colour)
 {
     std::ostringstream stream;
-    stream << madterm::text::foreground_colour(125, 17, 55);
+    stream << madterm::text::foreground_colour(125_r, 17_g, 55_b);
     EXPECT_EQ("\x1b[38;2;125;17;55m", stream.str());
 }
 
@@ -52,7 +54,7 @@ TEST(colourTests, predefined_background_colour)
 TEST(colourTests, custom_background_colour)
 {
     std::ostringstream stream;
-    stream << madterm::text::background_colour(1, 2, 3);
+    stream << madterm::text::background_colour(1_r, 2_g, 3_b);
     EXPECT_EQ("\x1b[48;2;1;2;3m", stream.str());
 }
 

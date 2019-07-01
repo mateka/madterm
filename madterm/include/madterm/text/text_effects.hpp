@@ -21,6 +21,8 @@
 #pragma once
 
 #include <madterm/terminal_sequence.hpp>
+#include <madterm/types.hpp>
+
 
 namespace madterm::text {
 
@@ -63,28 +65,25 @@ namespace detail {
 
     class rgba_colour : public terminal_sequence<rgba_colour> {
     public:
-        rgba_colour(
-            unsigned char r, unsigned char g, unsigned char b, int base_value);
+        rgba_colour(red r, green g, blue b, int base_value);
 
         ::std::ostream &print_sequence(::std::ostream &out) const;
 
     private:
-        int           base_value_;
-        unsigned char red_;
-        unsigned char green_;
-        unsigned char blue_;
+        int   base_value_;
+        red   red_;
+        green green_;
+        blue  blue_;
     };
 }  // namespace detail
 
 detail::predefined_colour foreground_colour(colours c);
 
-detail::rgba_colour
-foreground_colour(unsigned char r, unsigned char g, unsigned char b);
+detail::rgba_colour foreground_colour(red r, green g, blue b);
 
 detail::predefined_colour background_colour(colours c);
 
-detail::rgba_colour
-background_colour(unsigned char r, unsigned char g, unsigned char b);
+detail::rgba_colour background_colour(red r, green g, blue b);
 
 ::std::ostream &clear_formatting(::std::ostream &out);
 

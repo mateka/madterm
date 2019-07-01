@@ -21,6 +21,8 @@
 #pragma once
 
 #include <madterm/terminal_sequence.hpp>
+#include <madterm/types.hpp>
+
 
 namespace madterm::cursor {
 
@@ -38,13 +40,13 @@ suffixed_terminal_sequence row(short int r);
 
 class move_to : public terminal_sequence<move_to> {
 public:
-    move_to(short int x, short int y);
+    move_to(x_coord x, y_coord y);
 
     ::std::ostream &print_sequence(::std::ostream &out) const;
 
 private:
-    short int x_;
-    short int y_;
+    x_coord x_;
+    y_coord y_;
 };
 
 }  // namespace madterm::cursor

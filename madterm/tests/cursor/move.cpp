@@ -22,11 +22,13 @@
 #include <madterm/cursor/move.hpp>
 #include <sstream>
 
+
 // clang-format: off
 #include <gtest/gtest.h>
 
-
 // clang-format: on
+
+using namespace madterm::literals;
 
 TEST(moveTests, up)
 {
@@ -73,6 +75,6 @@ TEST(moveTests, row)
 TEST(moveTests, move_to)
 {
     std::ostringstream stream;
-    stream << madterm::cursor::move_to(8, 4);
+    stream << madterm::cursor::move_to(8_x, 4_y);
     EXPECT_EQ("\x1b[4;8H", stream.str());
 }

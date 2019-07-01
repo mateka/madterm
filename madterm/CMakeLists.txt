@@ -14,6 +14,7 @@ project(
 add_library(
     madterm
     include/madterm/enable_formatting.hpp
+    include/madterm/types.hpp
     src/enable_formatting.cpp
     include/madterm/terminal_sequence.hpp
     src/terminal_sequence.cpp

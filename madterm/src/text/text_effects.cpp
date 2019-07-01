@@ -41,8 +41,7 @@ namespace detail {
         return out << base_value_ + static_cast<int>(colour_) << 'm';
     }
 
-    rgba_colour::rgba_colour(
-        unsigned char r, unsigned char g, unsigned char b, int base_value)
+    rgba_colour::rgba_colour(red r, green g, blue b, int base_value)
         : base_value_{base_value}, red_{r}, green_{g}, blue_{b}
     {
     }
@@ -61,8 +60,7 @@ detail::predefined_colour foreground_colour(colours c)
     return {c, 30};
 }
 
-detail::rgba_colour
-foreground_colour(unsigned char r, unsigned char g, unsigned char b)
+detail::rgba_colour foreground_colour(red r, green g, blue b)
 {
     return {r, g, b, 38};
 }
@@ -72,8 +70,7 @@ detail::predefined_colour background_colour(colours c)
     return {c, 40};
 }
 
-detail::rgba_colour
-background_colour(unsigned char r, unsigned char g, unsigned char b)
+detail::rgba_colour background_colour(red r, green g, blue b)
 {
     return {r, g, b, 48};
 }

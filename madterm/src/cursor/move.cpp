@@ -22,7 +22,6 @@
 #include <iostream>
 #include <madterm/cursor/move.hpp>
 
-
 namespace madterm::cursor {
 
 suffixed_terminal_sequence up(short int rows)
@@ -55,7 +54,7 @@ suffixed_terminal_sequence row(short int r)
     return suffixed_terminal_sequence{r, 'd'};
 }
 
-move_to::move_to(short int x, short int y) : x_{x}, y_{y} {}
+move_to::move_to(x_coord x, y_coord y) : x_{x}, y_{y} {}
 
 ::std::ostream &move_to::print_sequence(::std::ostream &out) const
 {
