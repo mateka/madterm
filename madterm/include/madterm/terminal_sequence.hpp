@@ -33,18 +33,14 @@ class i_terminal_sequence {
 template<typename Derived>
 class terminal_sequence : public i_terminal_sequence {
 public:
-    explicit terminal_sequence(::std::string seq = "\x1b[")
+    explicit terminal_sequence(::std::string seq = u8"\x1b[")
         : seq_{::std::move(seq)}
     {
     }
 
-    template<typename CharT, typename Traits = std::char_traits<CharT>>
-    ::std::basic_ostream<CharT, Traits> &
-    operator()(::std::basic_ostream<CharT, Traits> &out) const
+    ::std::ostream &operator()(::std::ostream &out) const
     {
-        thread_local const ::std::basic_string<CharT> stream_seq{
-            ::std::cbegin(seq_), ::std::cend(seq_)};
-        out << stream_seq;
+        out << seq_;
         return derived().print_sequence(out);
     }
 
@@ -58,14 +54,11 @@ private:
     ::std::string seq_;
 };
 
-template<
-    typename Manipulator,
-    typename CharT,
-    typename Traits = std::char_traits<CharT>>
-::std::enable_if_t<
+template<typename Manipulator>
+inline ::std::enable_if_t<
     ::std::is_base_of_v<i_terminal_sequence, Manipulator>,
-    ::std::basic_ostream<CharT, Traits> &>
-operator<<(::std::basic_ostream<CharT, Traits> &out, Manipulator manip)
+    ::std::ostream &>
+operator<<(::std::ostream &out, Manipulator manip)
 {
     return manip(out);
 }
@@ -73,17 +66,9 @@ operator<<(::std::basic_ostream<CharT, Traits> &out, Manipulator manip)
 class prefixed_terminal_sequence
     : public terminal_sequence<prefixed_terminal_sequence> {
 public:
-    prefixed_terminal_sequence(short int value, char code)
-        : value_{value}, code_{code}
-    {
-    }
+    prefixed_terminal_sequence(short int value, char code);
 
-    template<typename CharT, typename Traits = std::char_traits<CharT>>
-    ::std::basic_ostream<CharT, Traits> &
-    print_sequence(::std::basic_ostream<CharT, Traits> &out) const
-    {
-        return out << code_ << value_;
-    }
+    ::std::ostream &print_sequence(::std::ostream &out) const;
 
 private:
     short int value_;
@@ -93,17 +78,9 @@ private:
 class suffixed_terminal_sequence
     : public terminal_sequence<suffixed_terminal_sequence> {
 public:
-    suffixed_terminal_sequence(short int value, char code)
-        : value_{value}, code_{code}
-    {
-    }
+    suffixed_terminal_sequence(short int value, char code);
 
-    template<typename CharT, typename Traits = std::char_traits<CharT>>
-    ::std::basic_ostream<CharT, Traits> &
-    print_sequence(::std::basic_ostream<CharT, Traits> &out) const
-    {
-        return out << value_ << code_;
-    }
+    ::std::ostream &print_sequence(::std::ostream &out) const;
 
 private:
     short int value_;
@@ -113,17 +90,9 @@ private:
 class simple_terminal_sequence
     : public terminal_sequence<simple_terminal_sequence> {
 public:
-    simple_terminal_sequence(char prefix, short int value, char suffix)
-        : value_{value}, prefix_{prefix}, suffix_{suffix}
-    {
-    }
+    simple_terminal_sequence(char prefix, short int value, char suffix);
 
-    template<typename CharT, typename Traits = std::char_traits<CharT>>
-    ::std::basic_ostream<CharT, Traits> &
-    print_sequence(::std::basic_ostream<CharT, Traits> &out) const
-    {
-        return out << prefix_ << value_ << suffix_;
-    }
+    ::std::ostream &print_sequence(::std::ostream &out) const;
 
 private:
     short int value_;

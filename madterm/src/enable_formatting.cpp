@@ -22,11 +22,13 @@
 #include <madterm/enable_formatting.hpp>
 #include <stdexcept>
 
+
 #ifdef _WIN32
 #    define DEFINE_CONSOLEV2_PROPERTIES
 #    define WIN32_LEAN_AND_MEAN
 #    define NOMINMAX
 #    include <windows.h>
+
 
 #endif
 
@@ -65,5 +67,11 @@ namespace detail {
 #endif
     }
 }  // namespace detail
+
+::std::ostream &enable_formatting(::std::ostream &out)
+{
+    detail::init_console();
+    return out;
+}
 
 }  // namespace madterm

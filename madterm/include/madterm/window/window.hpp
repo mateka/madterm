@@ -27,27 +27,14 @@ namespace madterm::window {
 
 class title : public terminal_sequence<title> {
 public:
-    title(::std::string window_title)
-        : terminal_sequence<title>{"\x1b]0;"}, title_{window_title}
-    {
-    }
+    title(::std::string window_title);
 
-    template<typename CharT, typename Traits = std::char_traits<CharT>>
-    ::std::basic_ostream<CharT, Traits> &
-    print_sequence(::std::basic_ostream<CharT, Traits> &out) const
-    {
-        thread_local const ::std::basic_string<CharT> stream_seq{
-            ::std::cbegin(title_), ::std::cend(title_)};
-        return out << stream_seq << "\x07";
-    }
+    ::std::ostream &print_sequence(::std::ostream &out) const;
 
 private:
     ::std::string title_;
 };
 
-inline simple_terminal_sequence wide(bool value)
-{
-    return simple_terminal_sequence{'?', 3, value ? 'h' : 'l'};
-}
+simple_terminal_sequence wide(bool value);
 
 }  // namespace madterm::window

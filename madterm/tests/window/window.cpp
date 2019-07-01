@@ -28,18 +28,19 @@
 
 // clang-format: on
 
-TEST(windowTests, title_char)
+TEST(windowTests, title)
 {
     std::ostringstream stream;
     stream << madterm::window::title("Title");
     EXPECT_EQ("\x1b]0;Title\x07", stream.str());
 }
 
-TEST(windowTests, title_wchar)
+TEST(windowTests, title_twice)
 {
-    std::wostringstream stream;
-    stream << madterm::window::title("Title");
-    EXPECT_EQ(L"\x1b]0;Title\x07", stream.str());
+    std::ostringstream stream;
+    stream << madterm::window::title("Title")
+           << madterm::window::title("Title 2");
+    EXPECT_EQ("\x1b]0;Title\x07\x1b]0;Title 2\x07", stream.str());
 }
 
 TEST(windowTests, wide)

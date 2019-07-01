@@ -24,14 +24,8 @@
 
 namespace madterm::cursor {
 
-inline simple_terminal_sequence blink(bool enable)
-{
-    return simple_terminal_sequence{'?', 12, enable ? 'h' : 'l'};
-}
+simple_terminal_sequence blink(bool enable);
 
-inline simple_terminal_sequence show(bool show)
-{
-    return simple_terminal_sequence{'?', 25, show ? 'h' : 'l'};
-}
+simple_terminal_sequence show(bool show);
 
 }  // namespace madterm::cursor

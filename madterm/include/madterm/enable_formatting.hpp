@@ -22,18 +22,9 @@
 
 #include <iosfwd>
 
+
 namespace madterm {
 
-namespace detail {
-    void init_console();
-}
-
-template<typename CharT, typename Traits = std::char_traits<CharT>>
-inline ::std::basic_ostream<CharT, Traits> &
-enable_formatting(::std::basic_ostream<CharT, Traits> &out)
-{
-    detail::init_console();
-    return out;
-}
+::std::ostream &enable_formatting(::std::ostream &out);
 
 }  // namespace madterm

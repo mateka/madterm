@@ -9,7 +9,6 @@
 #include <madterm/window/window.hpp>
 #include <thread>
 
-
 int main()
 {
     std::cout << madterm::enable_formatting
@@ -17,8 +16,7 @@ int main()
               << madterm::text::background_colour(75, 75, 75) << "Test"
               << madterm::text::clear_formatting
               << madterm::cursor::blink(false) << madterm::cursor::show(false)
-              << madterm::window::title("clock") << madterm::window::wide(false)
-              << " " << std::endl;
+              << madterm::window::title("clock") << " " << std::endl;
     while (true) {
         auto now  = std::chrono::system_clock::now();
         auto time = std::chrono::system_clock::to_time_t(now);

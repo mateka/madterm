@@ -15,10 +15,16 @@ add_library(
     madterm
     include/madterm/enable_formatting.hpp
     src/enable_formatting.cpp
+    include/madterm/terminal_sequence.hpp
+    src/terminal_sequence.cpp
     include/madterm/text/text_effects.hpp
+    src/text/text_effects.cpp
     include/madterm/cursor/move.hpp
+    src/cursor/move.cpp
     include/madterm/cursor/mode.hpp
+    src/cursor/mode.cpp
     include/madterm/window/window.hpp
+    src/window/window.cpp
 )
 target_compile_features(
     madterm

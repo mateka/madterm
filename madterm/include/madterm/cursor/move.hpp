@@ -22,49 +22,25 @@
 
 #include <madterm/terminal_sequence.hpp>
 
-
 namespace madterm::cursor {
 
-inline suffixed_terminal_sequence up(short int rows)
-{
-    return suffixed_terminal_sequence{rows, 'A'};
-}
+suffixed_terminal_sequence up(short int rows);
 
-inline suffixed_terminal_sequence down(short int rows)
-{
-    return suffixed_terminal_sequence{rows, 'B'};
-}
+suffixed_terminal_sequence down(short int rows);
 
-inline suffixed_terminal_sequence left(short int columns)
-{
-    return suffixed_terminal_sequence{columns, 'D'};
-}
+suffixed_terminal_sequence left(short int columns);
 
-inline suffixed_terminal_sequence right(short int columns)
-{
-    return suffixed_terminal_sequence{columns, 'C'};
-}
+suffixed_terminal_sequence right(short int columns);
 
-inline suffixed_terminal_sequence column(short int col)
-{
-    return suffixed_terminal_sequence{col, 'G'};
-}
+suffixed_terminal_sequence column(short int col);
 
-inline suffixed_terminal_sequence row(short int r)
-{
-    return suffixed_terminal_sequence{r, 'd'};
-}
+suffixed_terminal_sequence row(short int r);
 
 class move_to : public terminal_sequence<move_to> {
 public:
-    move_to(short int x, short int y) : x_{x}, y_{y} {}
+    move_to(short int x, short int y);
 
-    template<typename CharT, typename Traits = std::char_traits<CharT>>
-    ::std::basic_ostream<CharT, Traits> &
-    print_sequence(::std::basic_ostream<CharT, Traits> &out) const
-    {
-        return out << y_ << ';' << x_ << 'H';
-    }
+    ::std::ostream &print_sequence(::std::ostream &out) const;
 
 private:
     short int x_;

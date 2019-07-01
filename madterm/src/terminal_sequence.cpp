@@ -2,7 +2,7 @@
  * Copyright 2019 mateka
  *
  * Permission is hereby granted, free of charge, to any person obtaining
- * a copy of this software and associated documentation files (the "Software"),
+ * a copy of this software and associated documentation files(the "Software"),
  * to deal in the Software without restriction, including without limitation
  * the rights to use, copy, modify, merge, publish, distribute, sublicense,
  * and/or sell copies of the Software, and to permit persons to whom
@@ -19,42 +19,45 @@
  * THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
+#include <iostream>
 #include <madterm/terminal_sequence.hpp>
-#include <sstream>
-
-// clang-format: off
-#include <gtest/gtest.h>
 
 
-// clang-format: on
-
-class dummy : public madterm::terminal_sequence<dummy> {
-public:
-    ::std::ostream &print_sequence(::std::ostream &out) const
-    {
-        return out << "dummy";
-    }
-};
-
-class dummy2 : public madterm::terminal_sequence<dummy2> {
-public:
-    dummy2() : madterm::terminal_sequence<dummy2>{"dummy2"} {}
-    ::std::ostream &print_sequence(::std::ostream &out) const
-    {
-        return out << "dummy";
-    }
-};
-
-TEST(terminal_sequenceTests, correct_escape_sequence)
+namespace madterm {
+prefixed_terminal_sequence::prefixed_terminal_sequence(
+    short int value, char code)
+    : value_{value}, code_{code}
 {
-    std::ostringstream stream;
-    stream << dummy();
-    EXPECT_EQ("\x1b[dummy", stream.str());
 }
 
-TEST(terminal_sequenceTests, two_manipulators)
+::std::ostream &
+prefixed_terminal_sequence::print_sequence(::std::ostream &out) const
 {
-    std::ostringstream stream;
-    stream << dummy() << dummy2();
-    EXPECT_EQ("\x1b[dummydummy2dummy", stream.str());
+    return out << code_ << value_;
 }
+
+suffixed_terminal_sequence::suffixed_terminal_sequence(
+    short int value, char code)
+    : value_{value}, code_{code}
+{
+}
+
+::std::ostream &
+suffixed_terminal_sequence::print_sequence(::std::ostream &out) const
+{
+    return out << value_ << code_;
+}
+
+simple_terminal_sequence::simple_terminal_sequence(
+    char prefix, short int value, char suffix)
+    : value_{value}, prefix_{prefix}, suffix_{suffix}
+{
+}
+
+::std::ostream &
+simple_terminal_sequence::print_sequence(::std::ostream &out) const
+{
+    return out << prefix_ << value_ << suffix_;
+}
+
+}  // namespace madterm

@@ -47,25 +47,14 @@ enum class colours : int {
 namespace detail {
     class text_effect : public suffixed_terminal_sequence {
     public:
-        explicit text_effect(int effect)
-            : suffixed_terminal_sequence{effect, 'm'}
-        {
-        }
+        explicit text_effect(int effect);
     };
 
     class predefined_colour : public terminal_sequence<predefined_colour> {
     public:
-        predefined_colour(colours c, int base_value)
-            : colour_{c}, base_value_{base_value}
-        {
-        }
+        predefined_colour(colours c, int base_value);
 
-        template<typename CharT, typename Traits = std::char_traits<CharT>>
-        ::std::basic_ostream<CharT, Traits> &
-        print_sequence(::std::basic_ostream<CharT, Traits> &out) const
-        {
-            return out << base_value_ + static_cast<int>(colour_) << 'm';
-        }
+        ::std::ostream &print_sequence(::std::ostream &out) const;
 
     private:
         colours colour_;
@@ -75,19 +64,9 @@ namespace detail {
     class rgba_colour : public terminal_sequence<rgba_colour> {
     public:
         rgba_colour(
-            unsigned char r, unsigned char g, unsigned char b, int base_value)
-            : base_value_{base_value}, red_{r}, green_{g}, blue_{b}
-        {
-        }
+            unsigned char r, unsigned char g, unsigned char b, int base_value);
 
-        template<typename CharT, typename Traits = std::char_traits<CharT>>
-        ::std::basic_ostream<CharT, Traits> &
-        print_sequence(::std::basic_ostream<CharT, Traits> &out) const
-        {
-            return out << base_value_ << ";2;" << static_cast<int>(red_) << ';'
-                       << static_cast<int>(green_) << ';'
-                       << static_cast<int>(blue_) << 'm';
-        }
+        ::std::ostream &print_sequence(::std::ostream &out) const;
 
     private:
         int           base_value_;
@@ -97,45 +76,23 @@ namespace detail {
     };
 }  // namespace detail
 
-inline detail::predefined_colour foreground_colour(colours c)
-{
-    return {c, 30};
-}
+detail::predefined_colour foreground_colour(colours c);
 
-inline detail::rgba_colour
-foreground_colour(unsigned char r, unsigned char g, unsigned char b)
-{
-    return {r, g, b, 38};
-}
+detail::rgba_colour
+foreground_colour(unsigned char r, unsigned char g, unsigned char b);
 
-inline detail::predefined_colour background_colour(colours c)
-{
-    return {c, 40};
-}
+detail::predefined_colour background_colour(colours c);
 
-inline detail::rgba_colour
-background_colour(unsigned char r, unsigned char g, unsigned char b)
-{
-    return {r, g, b, 48};
-}
+detail::rgba_colour
+background_colour(unsigned char r, unsigned char g, unsigned char b);
 
-template<typename CharT, typename Traits = std::char_traits<CharT>>
-inline ::std::basic_ostream<CharT, Traits> &
-clear_formatting(::std::basic_ostream<CharT, Traits> &out)
-{
-    return detail::text_effect{0}(out);
-}
+::std::ostream &clear_formatting(::std::ostream &out);
 
-template<typename CharT, typename Traits = std::char_traits<CharT>>
-inline ::std::basic_ostream<CharT, Traits> &
-bold(::std::basic_ostream<CharT, Traits> &out)
-{
-    return detail::text_effect{1}(out);
-}
+::std::ostream &bold(::std::ostream &out);
 
 class underline : public detail::text_effect {
 public:
-    explicit underline(bool turn_on) : detail::text_effect{turn_on ? 4 : 24} {}
+    explicit underline(bool turn_on);
 };
 
 }  // namespace madterm::text
