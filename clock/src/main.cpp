@@ -5,13 +5,14 @@
 #include <madterm/cursor/mode.hpp>
 #include <madterm/cursor/move.hpp>
 #include <madterm/enable_formatting.hpp>
+#include <madterm/screen_buffer/screen_buffer.hpp>
 #include <madterm/text/text_effects.hpp>
 #include <madterm/window/window.hpp>
 #include <thread>
 
 int main()
 {
-    std::cout << madterm::enable_formatting
+    std::cout << madterm::enable_formatting << madterm::screen_buffer::alternate
               << madterm::text::foreground_colour(madterm::text::colours::green)
               << madterm::text::background_colour(75, 75, 75) << "Test"
               << madterm::text::clear_formatting
@@ -27,5 +28,5 @@ int main()
                   << madterm::cursor::move_to(70, 10) << "Time:" << std::flush;
         std::this_thread::sleep_for(std::chrono::seconds{1});
     }
-    std::cout << std::endl;
+    std::cout << madterm::screen_buffer::main << std::endl;
 }

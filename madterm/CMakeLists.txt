@@ -25,6 +25,8 @@ add_library(
     src/cursor/mode.cpp
     include/madterm/window/window.hpp
     src/window/window.cpp
+    include/madterm/screen_buffer/screen_buffer.hpp
+    src/screen_buffer/screen_buffer.cpp
 )
 target_compile_features(
     madterm

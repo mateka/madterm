@@ -11,6 +11,7 @@ add_executable(
     cursor/move.cpp
     cursor/mode.cpp
     window/window.cpp
+    screen_buffer/screen_buffer.cpp
 )
 target_link_libraries(
     madterm_tests
