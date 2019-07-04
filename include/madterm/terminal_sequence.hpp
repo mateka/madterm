@@ -66,38 +66,38 @@ operator<<(::std::ostream &out, Manipulator manip)
 class prefixed_terminal_sequence
     : public terminal_sequence<prefixed_terminal_sequence> {
 public:
-    prefixed_terminal_sequence(short int value, char code);
+    prefixed_terminal_sequence(unsigned short value, char code);
 
     ::std::ostream &print_sequence(::std::ostream &out) const;
 
 private:
-    short int value_;
-    char      code_;
+    unsigned short value_;
+    char           code_;
 };
 
 class suffixed_terminal_sequence
     : public terminal_sequence<suffixed_terminal_sequence> {
 public:
-    suffixed_terminal_sequence(short int value, char code);
+    suffixed_terminal_sequence(unsigned short value, char code);
 
     ::std::ostream &print_sequence(::std::ostream &out) const;
 
 private:
-    short int value_;
-    char      code_;
+    unsigned short value_;
+    char           code_;
 };
 
 class simple_terminal_sequence
     : public terminal_sequence<simple_terminal_sequence> {
 public:
-    simple_terminal_sequence(char prefix, short int value, char suffix);
+    simple_terminal_sequence(char prefix, unsigned short value, char suffix);
 
     ::std::ostream &print_sequence(::std::ostream &out) const;
 
 private:
-    short int value_;
-    char      prefix_;
-    char      suffix_;
+    unsigned short value_;
+    char           prefix_;
+    char           suffix_;
 };
 
 }  // namespace madterm

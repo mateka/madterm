@@ -26,17 +26,17 @@
 
 namespace madterm::cursor {
 
-suffixed_terminal_sequence up(short int rows);
+suffixed_terminal_sequence up(unsigned short rows);
 
-suffixed_terminal_sequence down(short int rows);
+suffixed_terminal_sequence down(unsigned short rows);
 
-suffixed_terminal_sequence left(short int columns);
+suffixed_terminal_sequence left(unsigned short columns);
 
-suffixed_terminal_sequence right(short int columns);
+suffixed_terminal_sequence right(unsigned short columns);
 
-suffixed_terminal_sequence column(short int col);
+suffixed_terminal_sequence column(unsigned short col);
 
-suffixed_terminal_sequence row(short int r);
+suffixed_terminal_sequence row(unsigned short r);
 
 class move_to : public terminal_sequence<move_to> {
 public:

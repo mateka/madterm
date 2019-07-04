@@ -18,8 +18,10 @@ add_library(
     src/enable_formatting.cpp
     include/madterm/terminal_sequence.hpp
     src/terminal_sequence.cpp
-    include/madterm/text/text_effects.hpp
-    src/text/text_effects.cpp
+    include/madterm/text/effects.hpp
+    src/text/effects.cpp
+    include/madterm/text/modification.hpp
+    src/text/modification.cpp
     include/madterm/cursor/move.hpp
     src/cursor/move.cpp
     include/madterm/cursor/mode.hpp

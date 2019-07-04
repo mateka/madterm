@@ -7,7 +7,8 @@ include(GoogleTest)
 add_executable(
     madterm_tests
     terminal_sequence.cpp
-    text/text_effects.cpp
+    text/effects.cpp
+    text/modification.cpp
     cursor/move.cpp
     cursor/mode.cpp
     window/window.cpp

@@ -22,34 +22,35 @@
 #include <iostream>
 #include <madterm/cursor/move.hpp>
 
+
 namespace madterm::cursor {
 
-suffixed_terminal_sequence up(short int rows)
+suffixed_terminal_sequence up(unsigned short rows)
 {
     return suffixed_terminal_sequence{rows, 'A'};
 }
 
-suffixed_terminal_sequence down(short int rows)
+suffixed_terminal_sequence down(unsigned short rows)
 {
     return suffixed_terminal_sequence{rows, 'B'};
 }
 
-suffixed_terminal_sequence left(short int columns)
+suffixed_terminal_sequence left(unsigned short columns)
 {
     return suffixed_terminal_sequence{columns, 'D'};
 }
 
-suffixed_terminal_sequence right(short int columns)
+suffixed_terminal_sequence right(unsigned short columns)
 {
     return suffixed_terminal_sequence{columns, 'C'};
 }
 
-suffixed_terminal_sequence column(short int col)
+suffixed_terminal_sequence column(unsigned short col)
 {
     return suffixed_terminal_sequence{col, 'G'};
 }
 
-suffixed_terminal_sequence row(short int r)
+suffixed_terminal_sequence row(unsigned short r)
 {
     return suffixed_terminal_sequence{r, 'd'};
 }

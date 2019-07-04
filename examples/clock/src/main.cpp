@@ -6,7 +6,8 @@
 #include <madterm/cursor/move.hpp>
 #include <madterm/enable_formatting.hpp>
 #include <madterm/screen_buffer/screen_buffer.hpp>
-#include <madterm/text/text_effects.hpp>
+#include <madterm/text/effects.hpp>
+#include <madterm/text/modification.hpp>
 #include <madterm/window/window.hpp>
 #include <thread>
 
@@ -28,6 +29,7 @@ int main()
         std::cout << madterm::cursor::move_to(69_x, 12_y)
                   << "xxxxxxxxxxxxxxxxxxx"
                   << madterm::cursor::move_to(70_x, 12_y)
+                  << madterm::text::insert_spaces(30)
                   << std::put_time(&tm, "%c")
                   << madterm::cursor::move_to(70_x, 10_y)
                   << "Time:" << std::flush;

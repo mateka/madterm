@@ -20,8 +20,7 @@
  */
 
 #include <iostream>
-#include <madterm/text/text_effects.hpp>
-
+#include <madterm/text/effects.hpp>
 
 namespace madterm::text {
 

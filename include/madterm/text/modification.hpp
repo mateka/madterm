@@ -18,46 +18,22 @@
  * TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH
  * THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
+#pragma once
 
-#include <iostream>
+#include <iosfwd>
 #include <madterm/terminal_sequence.hpp>
 
 
-namespace madterm {
-prefixed_terminal_sequence::prefixed_terminal_sequence(
-    unsigned short value, char code)
-    : value_{value}, code_{code}
-{
-}
+namespace madterm::text {
 
-::std::ostream &
-prefixed_terminal_sequence::print_sequence(::std::ostream &out) const
-{
-    return out << code_ << value_;
-}
+suffixed_terminal_sequence insert_spaces(unsigned short count);
 
-suffixed_terminal_sequence::suffixed_terminal_sequence(
-    unsigned short value, char code)
-    : value_{value}, code_{code}
-{
-}
+suffixed_terminal_sequence delete_characters(unsigned short count);
 
-::std::ostream &
-suffixed_terminal_sequence::print_sequence(::std::ostream &out) const
-{
-    return out << value_ << code_;
-}
+suffixed_terminal_sequence erase_characters(unsigned short count);
 
-simple_terminal_sequence::simple_terminal_sequence(
-    char prefix, unsigned short value, char suffix)
-    : value_{value}, prefix_{prefix}, suffix_{suffix}
-{
-}
+suffixed_terminal_sequence insert_lines(unsigned short count);
 
-::std::ostream &
-simple_terminal_sequence::print_sequence(::std::ostream &out) const
-{
-    return out << prefix_ << value_ << suffix_;
-}
+suffixed_terminal_sequence delete_lines(unsigned short count);
 
-}  // namespace madterm
+}  // namespace madterm::text

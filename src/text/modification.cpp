@@ -19,45 +19,33 @@
  * THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-#include <iostream>
-#include <madterm/terminal_sequence.hpp>
+#include <madterm/text/modification.hpp>
 
+namespace madterm::text {
 
-namespace madterm {
-prefixed_terminal_sequence::prefixed_terminal_sequence(
-    unsigned short value, char code)
-    : value_{value}, code_{code}
+suffixed_terminal_sequence insert_spaces(unsigned short count)
 {
+    return {count, '@'};
 }
 
-::std::ostream &
-prefixed_terminal_sequence::print_sequence(::std::ostream &out) const
+suffixed_terminal_sequence delete_characters(unsigned short count)
 {
-    return out << code_ << value_;
+    return {count, 'P'};
 }
 
-suffixed_terminal_sequence::suffixed_terminal_sequence(
-    unsigned short value, char code)
-    : value_{value}, code_{code}
+suffixed_terminal_sequence erase_characters(unsigned short count)
 {
+    return {count, 'X'};
 }
 
-::std::ostream &
-suffixed_terminal_sequence::print_sequence(::std::ostream &out) const
+suffixed_terminal_sequence insert_lines(unsigned short count)
 {
-    return out << value_ << code_;
+    return {count, 'L'};
 }
 
-simple_terminal_sequence::simple_terminal_sequence(
-    char prefix, unsigned short value, char suffix)
-    : value_{value}, prefix_{prefix}, suffix_{suffix}
+suffixed_terminal_sequence delete_lines(unsigned short count)
 {
+    return {count, 'M'};
 }
 
-::std::ostream &
-simple_terminal_sequence::print_sequence(::std::ostream &out) const
-{
-    return out << prefix_ << value_ << suffix_;
-}
-
-}  // namespace madterm
+}  // namespace madterm::text

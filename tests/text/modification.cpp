@@ -19,8 +19,7 @@
  * THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-#include <madterm/text/text_effects.hpp>
-#include <sstream>
+#include <madterm/text/modification.hpp>
 
 
 // clang-format: off
@@ -28,60 +27,37 @@
 
 // clang-format: on
 
-using namespace madterm::literals;
-
-TEST(colourTests, predefined_foreground_colour)
+TEST(modificationTests, insert_spaces)
 {
     std::ostringstream stream;
-    stream << madterm::text::foreground_colour(madterm::text::colours::red);
-    EXPECT_EQ("\x1b[31m", stream.str());
+    stream << madterm::text::insert_spaces(2);
+    EXPECT_EQ("\x1b[2@", stream.str());
 }
 
-TEST(colourTests, custom_foreground_colour)
+TEST(modificationTests, delete_characters)
 {
     std::ostringstream stream;
-    stream << madterm::text::foreground_colour(125_r, 17_g, 55_b);
-    EXPECT_EQ("\x1b[38;2;125;17;55m", stream.str());
+    stream << madterm::text::delete_characters(21);
+    EXPECT_EQ("\x1b[21P", stream.str());
 }
 
-TEST(colourTests, predefined_background_colour)
+TEST(modificationTests, erase_characters)
 {
     std::ostringstream stream;
-    stream << madterm::text::background_colour(madterm::text::colours::green);
-    EXPECT_EQ("\x1b[42m", stream.str());
+    stream << madterm::text::erase_characters(4);
+    EXPECT_EQ("\x1b[4X", stream.str());
 }
 
-TEST(colourTests, custom_background_colour)
+TEST(modificationTests, insert_lines)
 {
     std::ostringstream stream;
-    stream << madterm::text::background_colour(1_r, 2_g, 3_b);
-    EXPECT_EQ("\x1b[48;2;1;2;3m", stream.str());
+    stream << madterm::text::insert_lines(7);
+    EXPECT_EQ("\x1b[7L", stream.str());
 }
 
-TEST(colourTests, bold)
+TEST(modificationTests, delete_lines)
 {
     std::ostringstream stream;
-    stream << madterm::text::bold;
-    EXPECT_EQ("\x1b[1m", stream.str());
-}
-
-TEST(colourTests, underline)
-{
-    std::ostringstream stream;
-    stream << madterm::text::underline(true);
-    EXPECT_EQ("\x1b[4m", stream.str());
-}
-
-TEST(colourTests, no_underline)
-{
-    std::ostringstream stream;
-    stream << madterm::text::underline(false);
-    EXPECT_EQ("\x1b[24m", stream.str());
-}
-
-TEST(colourTests, clear)
-{
-    std::ostringstream stream;
-    stream << madterm::text::clear_formatting;
-    EXPECT_EQ("\x1b[0m", stream.str());
+    stream << madterm::text::delete_lines(3);
+    EXPECT_EQ("\x1b[3M", stream.str());
 }
