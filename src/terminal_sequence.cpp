@@ -22,7 +22,6 @@
 #include <iostream>
 #include <madterm/terminal_sequence.hpp>
 
-
 namespace madterm {
 prefixed_terminal_sequence::prefixed_terminal_sequence(
     unsigned short value, char code)
@@ -58,6 +57,21 @@ simple_terminal_sequence::simple_terminal_sequence(
 simple_terminal_sequence::print_sequence(::std::ostream &out) const
 {
     return out << prefix_ << value_ << suffix_;
+}
+
+string_sequence::string_sequence(::std::string code, ::std::string seq)
+    : terminal_sequence<string_sequence>{seq}, code_{code}
+{
+}
+
+::std::ostream &string_sequence::print_sequence(::std::ostream &out) const
+{
+    return out << code_;
+}
+
+::std::ostream &soft_reset(::std::ostream &out)
+{
+    return string_sequence{"!p"}(out);
 }
 
 }  // namespace madterm

@@ -9,6 +9,7 @@ add_executable(
     terminal_sequence.cpp
     text/effects.cpp
     text/modification.cpp
+    text/charset.cpp
     cursor/move.cpp
     cursor/mode.cpp
     window/window.cpp

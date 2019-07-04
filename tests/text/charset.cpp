@@ -19,49 +19,31 @@
  * THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-#include <madterm/terminal_sequence.hpp>
-#include <sstream>
-
+#include <madterm/text/charset.hpp>
 
 // clang-format: off
 #include <gtest/gtest.h>
 
+
 // clang-format: on
 
-class dummy : public madterm::terminal_sequence<dummy> {
-public:
-    ::std::ostream &print_sequence(::std::ostream &out) const
-    {
-        return out << "dummy";
-    }
-};
-
-class dummy2 : public madterm::terminal_sequence<dummy2> {
-public:
-    dummy2() : madterm::terminal_sequence<dummy2>{"dummy2"} {}
-    ::std::ostream &print_sequence(::std::ostream &out) const
-    {
-        return out << "dummy";
-    }
-};
-
-TEST(terminal_sequenceTests, correct_escape_sequence)
+TEST(charsetTests, ascii)
 {
     std::ostringstream stream;
-    stream << dummy();
-    EXPECT_EQ("\x1b[dummy", stream.str());
+    stream << madterm::text::ascii;
+    EXPECT_EQ("\x1b(B", stream.str());
 }
 
-TEST(terminal_sequenceTests, two_manipulators)
+TEST(charsetTests, lines)
 {
     std::ostringstream stream;
-    stream << dummy() << dummy2();
-    EXPECT_EQ("\x1b[dummydummy2dummy", stream.str());
+    stream << madterm::text::lines;
+    EXPECT_EQ("\x1b(0", stream.str());
 }
 
-TEST(terminal_sequenceTests, soft_reset)
+TEST(charsetTests, shape)
 {
     std::ostringstream stream;
-    stream << madterm::soft_reset;
-    EXPECT_EQ("\x1b[!p", stream.str());
+    stream << madterm::text::shapes::left_cross;
+    EXPECT_EQ("u", stream.str());
 }

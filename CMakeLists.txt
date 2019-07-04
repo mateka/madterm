@@ -22,6 +22,8 @@ add_library(
     src/text/effects.cpp
     include/madterm/text/modification.hpp
     src/text/modification.cpp
+    include/madterm/text/charset.hpp
+    src/text/charset.cpp
     include/madterm/cursor/move.hpp
     src/cursor/move.cpp
     include/madterm/cursor/mode.hpp

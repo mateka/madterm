@@ -2,7 +2,7 @@
  * Copyright 2019 mateka
  *
  * Permission is hereby granted, free of charge, to any person obtaining
- * a copy of this software and associated documentation files (the "Software"),
+ * a copy of this software and associated documentation files(the "Software"),
  * to deal in the Software without restriction, including without limitation
  * the rights to use, copy, modify, merge, publish, distribute, sublicense,
  * and/or sell copies of the Software, and to permit persons to whom
@@ -18,50 +18,31 @@
  * TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH
  * THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
+#pragma once
 
 #include <madterm/terminal_sequence.hpp>
-#include <sstream>
 
 
-// clang-format: off
-#include <gtest/gtest.h>
+namespace madterm::text {
 
-// clang-format: on
-
-class dummy : public madterm::terminal_sequence<dummy> {
-public:
-    ::std::ostream &print_sequence(::std::ostream &out) const
-    {
-        return out << "dummy";
-    }
+enum class shapes : char {
+    top_left_corner     = 'l',
+    top_right_corner    = 'k',
+    bottom_left_corner  = 'm',
+    bottom_right_corner = 'j',
+    cross               = 'n',
+    left_cross          = 'u',
+    right_cross         = 't',
+    top_cross           = 'v',
+    bottom_cross        = 'w',
+    hline               = 'q',
+    vline               = 'x'
 };
 
-class dummy2 : public madterm::terminal_sequence<dummy2> {
-public:
-    dummy2() : madterm::terminal_sequence<dummy2>{"dummy2"} {}
-    ::std::ostream &print_sequence(::std::ostream &out) const
-    {
-        return out << "dummy";
-    }
-};
+::std::ostream &operator<<(::std::ostream &out, shapes s);
 
-TEST(terminal_sequenceTests, correct_escape_sequence)
-{
-    std::ostringstream stream;
-    stream << dummy();
-    EXPECT_EQ("\x1b[dummy", stream.str());
-}
+::std::ostream &ascii(::std::ostream &out);
 
-TEST(terminal_sequenceTests, two_manipulators)
-{
-    std::ostringstream stream;
-    stream << dummy() << dummy2();
-    EXPECT_EQ("\x1b[dummydummy2dummy", stream.str());
-}
+::std::ostream &lines(::std::ostream &out);
 
-TEST(terminal_sequenceTests, soft_reset)
-{
-    std::ostringstream stream;
-    stream << madterm::soft_reset;
-    EXPECT_EQ("\x1b[!p", stream.str());
-}
+}  // namespace madterm::text

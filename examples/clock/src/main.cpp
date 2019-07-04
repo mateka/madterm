@@ -6,6 +6,7 @@
 #include <madterm/cursor/move.hpp>
 #include <madterm/enable_formatting.hpp>
 #include <madterm/screen_buffer/screen_buffer.hpp>
+#include <madterm/text/charset.hpp>
 #include <madterm/text/effects.hpp>
 #include <madterm/text/modification.hpp>
 #include <madterm/window/window.hpp>
@@ -29,11 +30,36 @@ int main()
         std::cout << madterm::cursor::move_to(69_x, 12_y)
                   << "xxxxxxxxxxxxxxxxxxx"
                   << madterm::cursor::move_to(70_x, 12_y)
-                  << madterm::text::insert_spaces(30)
+                  //   << madterm::text::insert_spaces(30)
                   << std::put_time(&tm, "%c")
-                  << madterm::cursor::move_to(70_x, 10_y)
-                  << "Time:" << std::flush;
+                  << madterm::cursor::move_to(75_x, 10_y) << "Time:"
+
+                  << madterm::text::lines << madterm::cursor::move_to(68_x, 9_y)
+                  << madterm::text::shapes::top_left_corner;
+        for (int i = 0; i < 19; ++i)
+            std::cout << madterm::text::shapes::hline;
+        std::cout << madterm::text::shapes::top_right_corner
+                  << madterm::cursor::move_to(68_x, 10_y)
+                  << madterm::text::shapes::vline
+                  << madterm::cursor::move_to(68_x, 11_y)
+                  << madterm::text::shapes::vline
+                  << madterm::cursor::move_to(68_x, 12_y)
+                  << madterm::text::shapes::vline
+
+                  << madterm::cursor::move_to(88_x, 10_y)
+                  << madterm::text::shapes::vline
+                  << madterm::cursor::move_to(88_x, 11_y)
+                  << madterm::text::shapes::vline
+                  << madterm::cursor::move_to(88_x, 12_y)
+                  << madterm::text::shapes::vline
+                  << madterm::cursor::move_to(68_x, 13_y)
+                  << madterm::text::shapes::bottom_left_corner;
+        for (int i = 0; i < 19; ++i)
+            std::cout << madterm::text::shapes::hline;
+        std::cout << madterm::text::shapes::bottom_right_corner
+                  << madterm::text::ascii << std::flush;
         std::this_thread::sleep_for(std::chrono::seconds{1});
     }
-    std::cout << madterm::screen_buffer::main << std::endl;
+    std::cout << madterm::screen_buffer::main << madterm::soft_reset
+              << std::endl;
 }

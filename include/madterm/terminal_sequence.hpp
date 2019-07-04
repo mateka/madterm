@@ -24,7 +24,6 @@
 #include <string>
 #include <type_traits>
 
-
 namespace madterm {
 
 class i_terminal_sequence {
@@ -99,5 +98,17 @@ private:
     char           prefix_;
     char           suffix_;
 };
+
+class string_sequence : public terminal_sequence<string_sequence> {
+public:
+    explicit string_sequence(::std::string code, ::std::string seq = u8"\x1b[");
+
+    ::std::ostream &print_sequence(::std::ostream &out) const;
+
+private:
+    ::std::string code_;
+};
+
+::std::ostream &soft_reset(::std::ostream &out);
 
 }  // namespace madterm
