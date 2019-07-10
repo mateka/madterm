@@ -49,28 +49,28 @@ enum class colours : int {
 namespace detail {
     class text_effect : public suffixed_terminal_sequence {
     public:
-        explicit text_effect(int effect);
+        explicit text_effect(unsigned short effect);
     };
 
     class predefined_colour : public terminal_sequence<predefined_colour> {
     public:
-        predefined_colour(colours c, int base_value);
+        predefined_colour(colours c, unsigned short base_value);
 
         ::std::ostream &print_sequence(::std::ostream &out) const;
 
     private:
         colours colour_;
-        int     base_value_;
+        unsigned short     base_value_;
     };
 
     class rgba_colour : public terminal_sequence<rgba_colour> {
     public:
-        rgba_colour(red r, green g, blue b, int base_value);
+        rgba_colour(red r, green g, blue b, unsigned short base_value);
 
         ::std::ostream &print_sequence(::std::ostream &out) const;
 
     private:
-        int   base_value_;
+        unsigned short   base_value_;
         red   red_;
         green green_;
         blue  blue_;

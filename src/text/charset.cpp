@@ -32,12 +32,12 @@ namespace madterm::text {
 
 ::std::ostream &ascii(::std::ostream &out)
 {
-    return string_sequence{"B", u8"\x1b("}(out);
+    return string_sequence{"B", "\x1b("}(out);
 }
 
 ::std::ostream &lines(::std::ostream &out)
 {
-    return string_sequence{"0", u8"\x1b("}(out);
+    return string_sequence{"0", "\x1b("}(out);
 }
 
 }  // namespace madterm::text

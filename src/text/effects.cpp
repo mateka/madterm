@@ -22,15 +22,16 @@
 #include <iostream>
 #include <madterm/text/effects.hpp>
 
+
 namespace madterm::text {
 
 namespace detail {
-    text_effect::text_effect(int effect)
+    text_effect::text_effect(unsigned short effect)
         : suffixed_terminal_sequence{effect, 'm'}
     {
     }
 
-    predefined_colour::predefined_colour(colours c, int base_value)
+    predefined_colour::predefined_colour(colours c, unsigned short base_value)
         : colour_{c}, base_value_{base_value}
     {
     }
@@ -40,7 +41,7 @@ namespace detail {
         return out << base_value_ + static_cast<int>(colour_) << 'm';
     }
 
-    rgba_colour::rgba_colour(red r, green g, blue b, int base_value)
+    rgba_colour::rgba_colour(red r, green g, blue b, unsigned short base_value)
         : base_value_{base_value}, red_{r}, green_{g}, blue_{b}
     {
     }
@@ -84,6 +85,9 @@ detail::rgba_colour background_colour(red r, green g, blue b)
     return detail::text_effect{1}(out);
 }
 
-underline::underline(bool turn_on) : detail::text_effect{turn_on ? 4 : 24} {}
+underline::underline(bool turn_on)
+    : detail::text_effect{static_cast<unsigned short>(turn_on ? 4 : 24)}
+{
+}
 
 }  // namespace madterm::text

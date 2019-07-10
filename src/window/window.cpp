@@ -25,7 +25,7 @@
 namespace madterm::window {
 
 title::title(::std::string window_title)
-    : terminal_sequence<title>{u8"\x1b]0;"}, title_{window_title}
+    : terminal_sequence<title>{"\x1b]0;"}, title_{window_title}
 {
 }
 

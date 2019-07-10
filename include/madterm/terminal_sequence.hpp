@@ -32,7 +32,7 @@ class i_terminal_sequence {
 template<typename Derived>
 class terminal_sequence : public i_terminal_sequence {
 public:
-    explicit terminal_sequence(::std::string seq = u8"\x1b[")
+    explicit terminal_sequence(::std::string seq = "\x1b[")
         : seq_{::std::move(seq)}
     {
     }
@@ -101,7 +101,7 @@ private:
 
 class string_sequence : public terminal_sequence<string_sequence> {
 public:
-    explicit string_sequence(::std::string code, ::std::string seq = u8"\x1b[");
+    explicit string_sequence(::std::string code, ::std::string seq = "\x1b[");
 
     ::std::ostream &print_sequence(::std::ostream &out) const;
 
