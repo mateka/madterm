@@ -1,0 +1,14 @@
+name: $(Date:yyyyMMdd)$(Rev:.r)
+
+resources:
+  repositories:
+    - repository: cicd
+      type: github
+      name: mateka/mad_ci_cd
+      endpoint: mateka
+
+stages:
+- template: build_and_test.yml@cicd  # Template reference
+  parameters:
+    linux_vcpkg_libraries: gtest
+    windows_vcpkg_libraries: gtest:x64-windows
