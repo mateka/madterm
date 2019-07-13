@@ -6,6 +6,7 @@ include(GoogleTest)
 
 add_executable(
     madterm_tests
+    types.cpp
     terminal_sequence.cpp
     text/effects.cpp
     text/modification.cpp

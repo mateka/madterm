@@ -22,7 +22,6 @@
 
 #include <iostream>
 
-
 namespace madterm {
 namespace detail {
     template<typename T, typename Tag>
@@ -39,6 +38,44 @@ namespace detail {
         explicit constexpr operator U() const
         {
             return static_cast<U>(value_);
+        }
+
+        tagged_type &operator++()
+        {
+            ++value_;
+            return *this;
+        }
+
+        tagged_type operator++(int)
+        {
+            auto res = *this;
+            ++(*this);
+            return res;
+        }
+
+        tagged_type &operator--()
+        {
+            --value_;
+            return *this;
+        }
+
+        tagged_type operator--(int)
+        {
+            auto res = *this;
+            --(*this);
+            return res;
+        }
+
+        tagged_type &operator+=(tagged_type const &other)
+        {
+            value_ += other.value_;
+            return *this;
+        }
+
+        tagged_type &operator-=(tagged_type const &other)
+        {
+            value_ -= other.value_;
+            return *this;
         }
 
     private:
@@ -58,9 +95,50 @@ namespace detail {
     }
 
     template<typename T, typename Tag>
+    bool operator<(tagged_type<T, Tag> const &a, tagged_type<T, Tag> const &b)
+    {
+        return static_cast<T>(a) < static_cast<T>(b);
+    }
+
+    template<typename T, typename Tag>
+    bool operator>(tagged_type<T, Tag> const &a, tagged_type<T, Tag> const &b)
+    {
+        return b < a;
+    }
+
+    template<typename T, typename Tag>
+    bool operator<=(tagged_type<T, Tag> const &a, tagged_type<T, Tag> const &b)
+    {
+        return !(a > b);
+    }
+
+    template<typename T, typename Tag>
+    bool operator>=(tagged_type<T, Tag> const &a, tagged_type<T, Tag> const &b)
+    {
+        return !(a < b);
+    }
+
+    template<typename T, typename Tag>
+    tagged_type<T, Tag>
+    operator+(tagged_type<T, Tag> a, tagged_type<T, Tag> const &b)
+    {
+        return a += b;
+    }
+
+    template<typename T, typename Tag>
+    tagged_type<T, Tag>
+    operator-(tagged_type<T, Tag> a, tagged_type<T, Tag> const &b)
+    {
+        return a -= b;
+    }
+
+    template<typename T, typename Tag>
     ::std::ostream &
     operator<<(::std::ostream &out, tagged_type<T, Tag> const &tt)
     {
+        if constexpr (sizeof(T) == 1)
+            return out << static_cast<int>(tt);
+
         return out << static_cast<T>(tt);
     }
 

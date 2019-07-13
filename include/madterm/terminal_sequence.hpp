@@ -27,6 +27,8 @@
 namespace madterm {
 
 class i_terminal_sequence {
+public:
+    virtual ::std::ostream &operator()(::std::ostream &out) const = 0;
 };
 
 template<typename Derived>
@@ -37,7 +39,7 @@ public:
     {
     }
 
-    ::std::ostream &operator()(::std::ostream &out) const
+    ::std::ostream &operator()(::std::ostream &out) const override
     {
         out << seq_;
         return derived().print_sequence(out);
