@@ -19,7 +19,6 @@
  * THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-#include <iostream>
 #include <madterm/terminal_sequence.hpp>
 
 namespace madterm {

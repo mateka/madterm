@@ -19,8 +19,8 @@
  * THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-#include <iostream>
 #include <madterm/window/window.hpp>
+
 
 namespace madterm::window {
 

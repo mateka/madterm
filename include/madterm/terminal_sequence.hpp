@@ -20,7 +20,7 @@
  */
 #pragma once
 
-#include <iosfwd>
+#include <iostream>
 #include <string>
 #include <type_traits>
 

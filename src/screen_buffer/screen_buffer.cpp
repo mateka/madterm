@@ -19,10 +19,8 @@
  * THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-#include <iostream>
 #include <madterm/screen_buffer/screen_buffer.hpp>
 #include <madterm/terminal_sequence.hpp>
-
 
 namespace madterm::screen_buffer {
 
