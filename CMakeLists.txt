@@ -80,6 +80,7 @@ install(
 )
 
 # Testing
+enable_testing()
 add_subdirectory(tests)
 
 # Examples
