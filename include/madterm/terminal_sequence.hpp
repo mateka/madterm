@@ -24,11 +24,13 @@
 #include <string>
 #include <type_traits>
 
+
 namespace madterm {
 
 class i_terminal_sequence {
 public:
     virtual ::std::ostream &operator()(::std::ostream &out) const = 0;
+    virtual ~i_terminal_sequence() {}
 };
 
 template<typename Derived>

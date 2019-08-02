@@ -1,6 +1,0 @@
-@PACKAGE_INIT@
-
-get_filename_component(SELF_DIR "${CMAKE_CURRENT_LIST_FILE}" PATH)
-include(${SELF_DIR}/clockTargets.cmake)
-
-check_required_components(clock)
